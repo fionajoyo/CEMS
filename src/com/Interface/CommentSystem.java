@@ -23,7 +23,24 @@ public interface CommentSystem {
      * @param dId :评论菜品dId*/
     public Comment fatherCommentInsert(String dId,String uId,String cContent);
 
-    public void deleteComment(String cId,String uId);
+
+    /**
+     * 普通用户或管理员对评论进行删除
+     * @param uId :user id
+     * @param cId  :评论的id
+     * @return true or false*/
+    public boolean deleteComment(String cId,String uId);
+
+    /**
+     * 评论点赞
+     * @param cId :要点赞的评论id
+     * */
+    public boolean getUp(String cId);
+
+    /**
+     * 评论点踩
+     * @param cId :要踩的评论id*/
+    public boolean getDown(String cId);
 
 
 

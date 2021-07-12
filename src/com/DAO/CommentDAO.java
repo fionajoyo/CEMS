@@ -1,10 +1,11 @@
-package com.DAO.CommentDAO;
+package com.DAO;
 
 import com.BaseClass.Comment;
 import com.DAO.BaseDAO;
 import com.Interface.CommentSystem;
 
 
+import javax.swing.plaf.SliderUI;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,10 +72,57 @@ public class CommentDAO extends BaseDAO implements CommentSystem {
     }
 
     @Override
-    public void deleteComment(String cId, String uId) {
+    public boolean deleteComment(String cId, String uId) {
 
-        String sql="select  u_id,u_pms  from usertable join comtable on usertable.u_id=comtable.u_id where c_id=? ";
+        String sql1="select  usertable.u_id  from usertable join comtable on usertable.u_id=comtable.u_id where c_id=? ";
+        String sql2="delete from comtable where c_id=?";
+        String sql3="select u_pms from usertable where u_id=?";
+        Object[] param={cId};
+        Object[] params={uId};
+        ArrayList<String>  as=query(sql1,param,8);
+        ArrayList<String>  as1=query(sql3,params,6);
+        if(as.get(0)==uId)
+        {
+            System.out.println("自己删除评论");
+            executeSQL(sql2,param);
+            return true;
+        }
+        else if(as.size()>0&&as1.get(0).equals("1"))
+        {
+            System.out.println("管理员删除评论");
+            executeSQL(sql2,param);
+            return true;
+        }
+        System.out.println("删除失败");
+        return false;
 
+    }
+
+    @Override
+    public boolean getUp(String cId) {
+        String sql="select c_up from comtable where c_id=?";
+        Object[] param={cId};
+        ArrayList<String> as =query(sql,param,8);
+        int cUp=Integer.parseInt(as.get(0))+1;
+        sql="update comtable set c_up=? where c_id=?";
+        Object[] params={cUp,cId};
+        executeSQL(sql,params);
+        return true;
+
+
+
+    }
+
+    @Override
+    public boolean getDown(String cId) {
+        String sql="select c_down from comtable where c_id=?";
+        Object[] param={cId};
+        ArrayList<String> as =query(sql,param,8);
+        int cDown=Integer.parseInt(as.get(0))+1;
+        sql="update comtable set c_down=? where c_id=?";
+        Object[] params={cDown,cId};
+        executeSQL(sql,params);
+        return true;
 
     }
 

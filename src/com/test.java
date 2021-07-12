@@ -1,23 +1,6 @@
 package com;
 
-import com.BaseClass.Dish;
-import com.DAO.BaseDAO;
-import com.DAO.CommentDAO.CommentDAO;
-import com.DAO.DishDAO.DishDAO;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import com.DAO.CommentDAO;
 
 /**
  * @Author=fionajoyo
@@ -34,7 +17,10 @@ public class test {
         ds.download(dish.getImageURL(),dish.getdId()+".jpg", "./Image/DishImage");*/
         CommentDAO cd=new CommentDAO();
         //cd.commentInsert("010010100","yy","gxysbaaaa");
-        cd.fatherCommentInsert("01001","yy","不太像");
+       // cd.fatherCommentInsert("01001","yy","不太像");
+        //cd.deleteComment("010010109","yy");
+        cd.getUp("010010108");
+        cd.getDown("010010108");
 
 
     }}

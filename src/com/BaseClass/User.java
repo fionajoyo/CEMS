@@ -13,16 +13,15 @@ import java.sql.SQLException;
 public class User {
     private String uId;
     private String uName;
-    private String uMail;
+
     private int uPms;
     private String passWord;
     private String uQuestion;
     private String uAnswer;
 
-    public User(String uId, String uName, String uMail, int uPms, String passWord, String uQuestion, String uAnswer) {
+    public User(String uId, String uName, int uPms, String passWord, String uQuestion, String uAnswer) {
         this.uId = uId;
         this.uName = uName;
-        this.uMail = uMail;
         this.uPms = uPms;
         this.passWord = passWord;
         this.uQuestion = uQuestion;
@@ -61,13 +60,7 @@ public class User {
         this.uName = uName;
     }
 
-    public String getuMail() {
-        return uMail;
-    }
 
-    public void setuMail(String uMail) {
-        this.uMail = uMail;
-    }
 
     public int getuPms() {
         return uPms;

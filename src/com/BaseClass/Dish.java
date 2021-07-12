@@ -17,7 +17,17 @@ public class Dish {
     private int dDown;
     private String imageURL;
 
-    public Dish(ResultSet rs) throws SQLException {
+    public Dish(String dId, String dName, String dLocation, String dShop, int dUp, int dDown, String imageURL) {
+        this.dId = dId;
+        this.dName = dName;
+        this.dLocation = dLocation;
+        this.dShop = dShop;
+        this.dUp = dUp;
+        this.dDown = dDown;
+        this.imageURL = imageURL;
+    }
+
+    /*public Dish(ResultSet rs) throws SQLException {
         dId=rs.getString(1);
 
         dName=rs.getString(2);
@@ -30,7 +40,7 @@ public class Dish {
         imageURL=rs.getString(7);
         System.out.println("dish初始化");
 
-    }
+    }*/
 
 
 
