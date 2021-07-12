@@ -12,6 +12,7 @@ public class Dish {
     private String dShop;
     private String dUp;
     private String dDown;
+    private String imageURL;
 
     public String getdId() {
         return dId;
@@ -59,5 +60,13 @@ public class Dish {
 
     public void setdDown(String dDown) {
         this.dDown = dDown;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
