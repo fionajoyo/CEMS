@@ -2,6 +2,7 @@ package com.DAO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class BaseDAO {
@@ -122,6 +123,45 @@ public class BaseDAO {
 
     }
 */
+/**
+ * @param preparedSql
+ * @param param
+ * @param column :表的列的数量
+ * @return 返回一个String型的链表*/
+    public ArrayList<String> query(String preparedSql,Object[] param,int column){
+        Connection conn=null;
+        PreparedStatement pstmt=null;//完全准备清单类，能避免sql注入
+        ResultSet rs=null;
+        ArrayList<String> obj =new ArrayList<String>();
+        try {
+            conn=getConn();//建立连接
+            pstmt=conn.prepareStatement(preparedSql);
+            if(param!=null){//若参数非空，传参
+                for (int i=0;i<param.length;i++){
+                    pstmt.setObject(i+1,param[i]);//i是0开始，但从1开始替换站位符
+                }
+            }
+            rs=pstmt.executeQuery();//提交，并将结果返回至ResultSet类中
+        }catch (ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                int i=0;
+                while (rs.next()){
+                    for (int j=i*column;j<column;j++){
+                        obj.add(rs.getString(j+1));
+                    }
+                    i++;
+                }
+            }catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+            this.closeAll(conn,pstmt,rs);
+        }
+        return obj;
+    }
+
     public static void main(String[] args) {//测试
         BaseDAO B=new BaseDAO();
         try {

@@ -11,6 +11,19 @@ public class Comment {
     private String uId;
     private String dId;
     private int cUp;
+    private int sonCount;
+    public Comment(String cId, String uId, String dId, int cUp, int cDown, String cContent, String cTiming,int sonCount) {
+        this.cId = cId;
+        this.uId = uId;
+        this.dId = dId;
+        this.cUp = cUp;
+        this.cDown = cDown;
+        this.cContent = cContent;
+        this.cTiming = cTiming;
+        this.sonCount=0; //用于记录父评论的子评论数，子评论不可再被评论(soncount=-1);
+
+    }
+
     private int cDown;
     private String cContent;
     private String cTiming;
