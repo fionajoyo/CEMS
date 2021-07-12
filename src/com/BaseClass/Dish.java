@@ -1,10 +1,5 @@
 package com.BaseClass;
 
-/**
- * @Author=fionajoyo
- * @Date 2021/7/12 9:39
- * @Version 1.0
- */
 public class Dish {
     private String dId;
     private String dName;
