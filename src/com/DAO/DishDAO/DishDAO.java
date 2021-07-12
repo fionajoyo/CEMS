@@ -2,9 +2,13 @@ package com.DAO.DishDAO;
 
 import com.BaseClass.Dish;
 import com.DAO.BaseDAO;
+import com.Interface.DishDownload;
 import com.Interface.DishReadIn;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.PublicKey;
 import java.sql.*;
 import java.util.Date;
@@ -14,7 +18,7 @@ import java.util.Date;
  * @Date 2021/7/12 9:52
  * @Version 1.0
  */
-public class DishDAO extends BaseDAO implements DishReadIn {
+public class DishDAO extends BaseDAO implements DishReadIn, DishDownload {
      public BaseDAO bs=new BaseDAO();
 
 
@@ -57,5 +61,50 @@ public class DishDAO extends BaseDAO implements DishReadIn {
         return dish;
     };
 
+    @Override
+    public void download(String urlString, String filename, String savePath){
+        // 构造URL
+        URL url = null;
+        try {
+            url = new URL(urlString);
+            URLConnection con = null;
+            try {
+                con = url.openConnection();
+                //设置请求超时为5s
+                con.setConnectTimeout(5 * 1000);
+                // 输入流
+                InputStream is = con.getInputStream();
 
+                // 1K的数据缓冲
+                byte[] bs = new byte[1024];
+                // 读取到的数据长度
+                int len;
+                // 输出的文件流
+                File sf = new File(savePath);
+                if (!sf.exists()) {
+                    sf.mkdirs();
+                }
+                String extensionName = filename.substring(filename.lastIndexOf(".") + 1);
+                String Name=filename.substring(0,filename.lastIndexOf("."));
+                // 新的图片文件名 = 编号 +"."图片扩展名
+                String newFileName =Name + extensionName;
+                OutputStream os = new FileOutputStream(sf.getPath() + "\\" + filename);
+                // 开始读取
+                while ((len = is.read(bs)) != -1) {
+                    os.write(bs, 0, len);
+                }
+                // 完毕，关闭所有链接
+                os.close();
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        // 打开连接
+
+
+    }
 }
