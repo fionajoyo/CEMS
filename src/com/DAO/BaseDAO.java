@@ -94,7 +94,8 @@ public class BaseDAO {
     }
 
     //查询方法
-    public ResultSet query(String preparedSql,Object[] param){
+    /*public Object[] query(String preparedSql,Object[] param){
+        Object[] oj;
         Connection conn=null;
         PreparedStatement pstmt=null;//完全准备清单类，能避免sql注入
         ResultSet rs=null;
@@ -106,15 +107,21 @@ public class BaseDAO {
                     pstmt.setObject(i+1,param[i]);//i是0开始，但从1开始替换站位符
                 }
             }
+
             rs=pstmt.executeQuery();//提交，并将结果返回至ResultSet类中
+            for(int i=0;!rs.next();i++)
+            {
+                oj[i]=rs.getString()
+            }
         }catch (ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }finally {
+
             this.closeAll(conn,pstmt,null);
         }
-        return rs;
-    }
 
+    }
+*/
     public static void main(String[] args) {//测试
         BaseDAO B=new BaseDAO();
         try {

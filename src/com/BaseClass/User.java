@@ -19,6 +19,16 @@ public class User {
     private String uQuestion;
     private String uAnswer;
 
+    public User(String uId, String uName, String uMail, int uPms, String passWord, String uQuestion, String uAnswer) {
+        this.uId = uId;
+        this.uName = uName;
+        this.uMail = uMail;
+        this.uPms = uPms;
+        this.passWord = passWord;
+        this.uQuestion = uQuestion;
+        this.uAnswer = uAnswer;
+    }
+
     public void getFromSQL()
     {
         BaseDAO bs=new BaseDAO();

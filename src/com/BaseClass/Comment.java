@@ -6,13 +6,16 @@ package com.BaseClass;
  * @Version 1.0
  */
 public class Comment {
+
     private String cId;
     private String uId;
     private String dId;
-    private String cUp;
-    private String cDown;
+    private int cUp;
+    private int cDown;
     private String cContent;
     private String cTiming;
+
+
 
 
     public String getcId() {
@@ -39,19 +42,19 @@ public class Comment {
         this.dId = dId;
     }
 
-    public String getcUp() {
+    public int getcUp() {
         return cUp;
     }
 
-    public void setcUp(String cUp) {
+    public void setcUp(int cUp) {
         this.cUp = cUp;
     }
 
-    public String getcDown() {
+    public int getcDown() {
         return cDown;
     }
 
-    public void setcDown(String cDown) {
+    public void setcDown(int cDown) {
         this.cDown = cDown;
     }
 
