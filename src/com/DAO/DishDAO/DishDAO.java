@@ -2,23 +2,21 @@ package com.DAO.DishDAO;
 
 import com.BaseClass.Dish;
 import com.DAO.BaseDAO;
-import com.Interface.DishDownload;
-import com.Interface.DishReadIn;
+import com.Interface.DishSystem;
+
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.PublicKey;
 import java.sql.*;
-import java.util.Date;
 
 /**
  * @Author=fionajoyo
  * @Date 2021/7/12 9:52
  * @Version 1.0
  */
-public class DishDAO extends BaseDAO implements DishReadIn, DishDownload {
+public class DishDAO extends BaseDAO implements DishSystem {
      public BaseDAO bs=new BaseDAO();
 
 

@@ -2,11 +2,10 @@ package com.DAO.CommentDAO;
 
 import com.BaseClass.Comment;
 import com.DAO.BaseDAO;
-import com.Interface.CommentInsert;
-import com.Interface.FatherCommentInsert;
+import com.Interface.CommentSystem;
+
 
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  * @Date 2021/7/12 9:52
  * @Version 1.0
  */
-public class CommentDAO extends BaseDAO implements CommentInsert, FatherCommentInsert {
+public class CommentDAO extends BaseDAO implements CommentSystem {
 
     @Override
     public Comment commentInsert(String father_cId,String uId,String cContent)
@@ -71,7 +70,14 @@ public class CommentDAO extends BaseDAO implements CommentInsert, FatherCommentI
         return  c;
     }
 
+    @Override
+    public void deleteComment(String cId, String uId) {
+
+        String sql="select  u_id,u_pms  from usertable join comtable on usertable.u_id=comtable.u_id where c_id=? ";
 
 
     }
+
+
+}
 
