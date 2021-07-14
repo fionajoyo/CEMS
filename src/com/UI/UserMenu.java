@@ -16,14 +16,10 @@ public class UserMenu extends JMenub{
         panel.setLayout(null);
         panel.setBackground(Color.getHSBColor(201,175,138));
         JLabel label=new JLabel("欢迎进入食堂菜品评价系统");
-        JButton button=new JButton("查询菜品");
+        RoundRectButton button=new RoundRectButton("6.png");
         JButton button1=new JButton("评价菜品");
-
         label.setBounds(25,50,600,100);
         label.setFont(new Font("宋体",Font.BOLD,40));
-
-        button.setBounds(50,400,200,100);
-        button.setFont(new Font("宋体",Font.BOLD,30));
         button.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

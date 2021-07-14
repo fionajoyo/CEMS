@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
+
 public class BaseDAO {
     private static String driver=null;
     private static String url=null;
@@ -95,39 +96,6 @@ public class BaseDAO {
     }
 
     //查询方法
-    /*public Object[] query(String preparedSql,Object[] param){
-        Object[] oj;
-        Connection conn=null;
-        PreparedStatement pstmt=null;//完全准备清单类，能避免sql注入
-        ResultSet rs=null;
-        try {
-            conn=getConn();//建立连接
-            pstmt=conn.prepareStatement(preparedSql);
-            if(param!=null){//若参数非空，传参
-                for (int i=0;i<param.length;i++){
-                    pstmt.setObject(i+1,param[i]);//i是0开始，但从1开始替换站位符
-                }
-            }
-
-            rs=pstmt.executeQuery();//提交，并将结果返回至ResultSet类中
-            for(int i=0;!rs.next();i++)
-            {
-                oj[i]=rs.getString()
-            }
-        }catch (ClassNotFoundException | SQLException e){
-            e.printStackTrace();
-        }finally {
-
-            this.closeAll(conn,pstmt,null);
-        }
-
-    }
-*/
-/**
- * @param preparedSql
- * @param param
- * @param column :表的列的数量
- * @return 返回一个String型的链表*/
     public ArrayList<String> query(String preparedSql,Object[] param,int column){
         Connection conn=null;
         PreparedStatement pstmt=null;//完全准备清单类，能避免sql注入
@@ -148,7 +116,7 @@ public class BaseDAO {
             try {
                 int i=0;
                 while (rs.next()){
-                    for (int j=i*column;j<column;j++){
+                    for (int j=0;j<column;j++){
                         obj.add(rs.getString(j+1));
                     }
                     i++;
@@ -162,12 +130,4 @@ public class BaseDAO {
         return obj;
     }
 
-    public static void main(String[] args) {//测试
-        BaseDAO B=new BaseDAO();
-        try {
-            B.closeAll(B.getConn(),null,null);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

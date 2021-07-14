@@ -2,6 +2,8 @@ package com.Interface;
 
 import com.BaseClass.Comment;
 
+import java.util.ArrayList;
+
 /**
  * @Author=fionajoyo
  * @Date 2021/7/12 14:41
@@ -41,6 +43,11 @@ public interface CommentSystem {
      * 评论点踩
      * @param cId :要踩的评论id*/
     public boolean getDown(String cId);
+    /**
+     * 输入菜品的did，获得他其下所有的评论
+     * @param dId :输入菜品的id
+     * @return  Comment型链表*/
+    public ArrayList<Comment> DishToComment(String dId);
 
 
 

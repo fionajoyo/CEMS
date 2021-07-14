@@ -1,6 +1,7 @@
 package com;
 
 import com.DAO.CommentDAO;
+import com.DAO.UserDAO;
 
 /**
  * @Author=fionajoyo
@@ -15,12 +16,12 @@ public class test {
        ArrayList<String> arrayList= ds.query("select * from dishtable where d_id=?",param,7);
         System.out.println(arrayList.get(6));
         ds.download(dish.getImageURL(),dish.getdId()+".jpg", "./Image/DishImage");*/
+        //UserDAO ud=new UserDAO();
+        //System.out.println(ud.CommentToUser("010010102"));
+
         CommentDAO cd=new CommentDAO();
-        //cd.commentInsert("010010100","yy","gxysbaaaa");
-       // cd.fatherCommentInsert("01001","yy","不太像");
-        //cd.deleteComment("010010109","yy");
-        cd.getUp("010010108");
-        cd.getDown("010010108");
+        //cd.DishToComment("01001");
+        cd.getDown("010010105");
 
 
     }}

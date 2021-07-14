@@ -1,25 +1,23 @@
 package com.DAO;
 
 import com.BaseClass.Dish;
-import com.BaseClass.User;
-import com.DAO.BaseDAO;
 import com.Interface.DishSystem;
 
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- * @Author=Anchor
- * @Date 2021/7/12 9:52
- * @Version 1.0
- */
-public class DishDAO extends BaseDAO implements DishSystem {
 
+public class DishDAO extends BaseDAO implements DishSystem {
+    //位于服务器的统一资源定位符
+    public String urlHead="http://124.71.236.232:8888/down/iyCulXppgeF9?fname=/";
     @Override
     public Dish DishReadin(String dId){
         String sql="select * from dishtable where d_id=?";
@@ -69,7 +67,7 @@ public class DishDAO extends BaseDAO implements DishSystem {
     }
 
     @Override
-    public Dish[] HUIDish() {
+    public Dish[] WEIDish() {
         String sql = "select * from dishtable where d_id like '02___'";
         ArrayList<String> obj = query(sql, null,7);
         Dish[] dishes=new Dish[obj.size()/7];
@@ -100,6 +98,26 @@ public class DishDAO extends BaseDAO implements DishSystem {
         }
         return dishes;
     }
+
+    @Override
+    public ImageIcon readImage(Dish dish) {
+        String dishPath = ".\\image\\" + dish.getdId() + ".jpg";
+        ImageIcon image = null;
+        image = new ImageIcon(dishPath);
+        if(image.getIconWidth()==-1){
+            //如果缺失则再下载一次
+            download(urlHead + dish.getdId() + ".jpg", dish.getdId() + ".jpg", "./image");
+            URL url= null;
+            try {
+                url = new URL(urlHead+dish.getdId()+".jpg");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            image = new ImageIcon(url);
+        }
+        return image;
+    }
+
 
     @Override
     public void download(String urlString, String filename, String savePath){
@@ -146,4 +164,10 @@ public class DishDAO extends BaseDAO implements DishSystem {
         // 打开连接
     }
 
+
+    public static void main(String[] args) {
+        DishDAO d=new DishDAO();
+        ImageIcon i= d.readImage(d.DishReadin("01001"));
+        System.out.println("查询图片已完成!");
+    }
 }

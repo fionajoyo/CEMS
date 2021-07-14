@@ -137,7 +137,15 @@ public class UserDAO extends BaseDAO implements LoginAndRegister, UserManage {
         return true;
     }
 
-
+    @Override
+    public String CommentToUser(String cId)
+    {
+            String  name=null;
+            String  sql="select u_name from comtable join usertable on comtable.u_id=usertable.u_id where comtable.c_id=?";
+            Object[] param={cId};
+            ArrayList<String> al=query(sql,param,1);
+             return  al.get(0);
+    }
     private boolean NumAndLetter(String s)
     {
         int letterflag=0;
@@ -160,4 +168,5 @@ public class UserDAO extends BaseDAO implements LoginAndRegister, UserManage {
         }
         else{return false;}
     }
+
 }

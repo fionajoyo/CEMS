@@ -14,10 +14,13 @@ public class Login extends JFrame {
     private JTextField userText = new JTextField();           // 获取登录名
     private JLabel passLabel = new JLabel("密  码:");       // 创建PassJLabel
     private JPasswordField passText = new JPasswordField(20); //密码框隐藏
-    private JButton loginButton = new JButton("登 录");       // 创建登录按钮
-    private JButton registerButton = new JButton("注 册"); // 创建注册按钮
-    private JButton loginb=new JButton("登 录");
-    private JButton findpassWord=new JButton("忘记密码?");
+
+
+    private RoundRectButton loginButton = new RoundRectButton("10.png");       // 创建登录按钮
+    private RoundRectButton registerButton = new RoundRectButton("9.png"); // 创建注册按钮
+
+    private RoundRectButton loginb=new RoundRectButton("2.png");
+    private RoundRectButton findpassWord=new RoundRectButton("8.png");
     private JPanel panel1;
     private JLabel label=new JLabel("权  限:");
     //private JTextField authorityText=new JTextField();
@@ -25,6 +28,8 @@ public class Login extends JFrame {
 
 
     public Login() {
+
+        panel.setBackground(new Color(201,175,138));
         //设置窗体的位置及大小
         frame.setSize(650, 720);
         frame.setLocationRelativeTo(null);                     //在屏幕中居中显示
@@ -41,15 +46,17 @@ public class Login extends JFrame {
         //-------------接口引入
 
         panel.setLayout(null);  //设置布局为 null
-        panel.setBackground(Color.getHSBColor(201,175,138));
+        //panel.setBackground(Color.getHSBColor(201,175,138));
 
         // 创建 UserJLabel
         userLabel.setBounds(50, 200, 100, 65);
         userLabel.setFont(new Font("宋体",Font.BOLD,20));
         panel.add(userLabel);
         // 创建文本域用于用户输入
-        userText.setBounds(150, 200, 450, 65);
+        userText.setBounds(150, 200, 400, 65);
         userText.setBorder(BorderFactory.createLineBorder(Color.white, 2, true));
+        userText.setText("gxy");
+        userText.setFont(new Font("黑体",Font.BOLD,20));
         panel.add(userText);
 
         // 创建PassJLabel
@@ -57,8 +64,9 @@ public class Login extends JFrame {
         passLabel.setFont(new Font("宋体",Font.BOLD,20));
         panel.add(passLabel);
         // 密码输入框 隐藏
-        passText.setBounds(150, 300, 450, 65);
+        passText.setBounds(150, 300, 400, 65);
         passText.setBorder(BorderFactory.createLineBorder(Color.white, 2, true));
+        passText.setText("gxy123456");
         panel.add(passText);
         //创建权限
         label.setBounds(50,400 , 100, 65);
@@ -70,14 +78,17 @@ public class Login extends JFrame {
         cmb.addItem("--请选择--");    //向下拉列表中添加一项
         cmb.addItem("用户");
         cmb.addItem("管理员");
-        cmb.setBounds(150, 400, 450, 65);
+        cmb.setBounds(150, 400, 400, 65);
         cmb.setBorder(BorderFactory.createLineBorder(Color.white, 2, true));
+        cmb.setFont(new Font("黑体",Font.BOLD,20));
         panel.add(cmb);
         // 创建登录按钮
-        loginb.setBounds(50,500,250,65);
+        /*loginb.setBounds(50,500,250,65);
         loginb.setBackground(Color.RED);
         loginb.setFont(new Font("宋体",Font.BOLD,30));
         loginb.setBorder(BorderFactory.createLineBorder(Color.RED, 0, true));
+        panel.add(loginb);*/
+        loginb.reset(110,520,200,40);
         panel.add(loginb);
         loginb.addActionListener(new ActionListener() {
             @Override
@@ -119,10 +130,8 @@ public class Login extends JFrame {
             }
         });
         //创建忘记密码按钮
-        findpassWord.setBounds(350, 500, 250, 65);
-        findpassWord.setFont(new Font("宋体",Font.BOLD,20));
-        findpassWord.setBackground(Color.getHSBColor(201,175,138));
-        findpassWord.setBorder(BorderFactory.createLineBorder(Color.getHSBColor(201,175,138), 0, true));
+        //loginb.reset(110,520,200,40);
+        findpassWord.reset(350,520,200,40);
         panel.add(findpassWord);
         findpassWord.addActionListener(new ActionListener() {
             @Override
@@ -134,19 +143,22 @@ public class Login extends JFrame {
             }
         });
         // 创建登录按钮
-        loginButton.setBounds(325, 624, 325, 50);
-        loginButton.setFont(new Font("宋体",Font.BOLD,30));
-        loginButton.setBackground(Color.getHSBColor(201,175,138));
-        loginButton.setBorder(BorderFactory.createLineBorder(Color.getHSBColor(201,175,138), 0, true));
-        panel.add(loginButton);
-        loginButton.setEnabled(false);
+        loginButton.reset(325-10-10, 624-30, 360, 80);
+        //loginButton.setFont(new Font("宋体",Font.BOLD,30));
+        //loginButton.setBackground(Color.getHSBColor(201,175,138));
+        //loginButton.setBorder(BorderFactory.createLineBorder(Color.getHSBColor(201,175,138), 0, true));
+
+        //.setEnabled(false);
 
         //创建注册按钮
-        registerButton.setBounds(0, 624, 325, 50);
-        registerButton.setFont(new Font("宋体",Font.BOLD,30));
-        registerButton.setBackground(Color.getHSBColor(230,220,205));
-        registerButton.setBorder(BorderFactory.createLineBorder(Color.RED, 0, true));
+        registerButton.reset(0, 624-50, 340, 100);
+        //registerButton.setFont(new Font("宋体",Font.BOLD,30));
+        //registerButton.setBackground(Color.getHSBColor(230,220,205));
+        //registerButton.setBorder(BorderFactory.createLineBorder(Color.RED, 0, true));
+
+
         panel.add(registerButton);
+        panel.add(loginButton);
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

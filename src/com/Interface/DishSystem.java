@@ -1,16 +1,13 @@
 package com.Interface;
-
 import com.BaseClass.Dish;
 
-/**
- * @Author=Anchor
- * @Date 2021/7/12 18:50
- * @Version 1.0
- */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public  interface DishSystem {
     /**
-     * 图片传输
+     * 图片传输(该方法不用显式调用）
      * @param urlString :dish的图片url链接，dish.getImageURL()
      * @param filename  :存放图片名,dish.getdId()+".jpg"
      * @param savePath  :存放图片目录，使用./Image/DishImage*/
@@ -49,7 +46,7 @@ public  interface DishSystem {
     /**
      * 徽菜
      * @return 返回菜品数组*/
-    public Dish[] HUIDish();
+    public Dish[] WEIDish();
 
     /**
      * 东北菜
@@ -60,4 +57,8 @@ public  interface DishSystem {
      * 湘菜
      * @return 返回菜品数组*/
     public Dish[] XIANGDish();
+
+    /**读取图片
+     * @return ImageIcon图片类*/
+    public ImageIcon readImage(Dish dish);
 }

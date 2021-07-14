@@ -39,4 +39,9 @@ public interface UserManage {
      * @param uPms 赋予的权限
      * @return boolean:更改成功与否*/
     public boolean changePermission(User user,int uPms);
+
+    /**评论ID返回用户信息
+     * @param cId
+     * @return 返回用户name*/
+    public String CommentToUser(String cId);
 }
