@@ -19,8 +19,8 @@ public interface LoginAndRegister {
      * @param uQuestion:设置安全问题
      * @param uAnswer:设置安全回答
      * @param key:密匙，设置后可以成为管理员 114514:普通管理员，0452:超级管理员
-     * @return boolean:返回登录成功或失败的布尔值*/
-    public boolean register(String uId,String uName,String uPassword,String uQuestion,String uAnswer,int key);
+     * @return int:返回登录成功或失败的状态值 1:成功  0:用户ID不符合要求  -1:用户名重复  -2:密码不符合要求*/
+    public int register(String uId,String uName,String uPassword,String uQuestion,String uAnswer,int key);
     /**
      * 查询用户安全问题
      * @param uId:用户id

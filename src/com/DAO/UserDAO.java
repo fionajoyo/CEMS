@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class UserDAO extends BaseDAO implements LoginAndRegister, UserManage {
 
-    private User nowUser;//当前登录用户的信息
+    private static User nowUser=new User();//当前登录用户的信息
 
     @Override
     public int login(String uId, String uPassword) {
@@ -33,12 +33,22 @@ public class UserDAO extends BaseDAO implements LoginAndRegister, UserManage {
     }
 
     @Override
-    public boolean register(String uId, String uName, String uPassword,String uQuestion,String uAnswer, int key) {
+    public int register(String uId, String uName, String uPassword,String uQuestion,String uAnswer, int key) {
         String sql1 = "select u_id from usertable where u_id=?";
         Object[] param1 = {uId};
         ArrayList<String> obj = query(sql1, param1, 1);
         if (obj.size()!=0)
-            return false;
+        {return -1;}//用户名重复
+
+        if(uId.length()<3||uId.length()>16||!NumAndLetter(uId))
+        {
+            return 0;//用户ID不符合要求
+        }
+        if(uPassword.length()<6||uPassword.length()>20||!NumAndLetter(uPassword))
+        {
+            return -2; //密码不符合要求
+        }
+
         String sql2 = "insert into usertable values(?,?,?,?,?,?)";
         int temp=0;
         if(key==114514){
@@ -48,7 +58,7 @@ public class UserDAO extends BaseDAO implements LoginAndRegister, UserManage {
         }
         Object[] param2={uId,uName,temp,uPassword,uQuestion,uAnswer};
         executeSQL(sql2,param2);
-        return true;
+        return 1;
     }
 
     @Override
@@ -125,5 +135,29 @@ public class UserDAO extends BaseDAO implements LoginAndRegister, UserManage {
         }
         user.setuPms(Math.min(uPms, nowUser.getuPms()));
         return true;
+    }
+
+
+    private boolean NumAndLetter(String s)
+    {
+        int letterflag=0;
+        int numberflag=0;
+        for (int i=0;i<s.length();i++)
+        {
+            if(Character.isLetter(s.charAt(i)))
+            {
+                letterflag=1;
+            }
+            if(Character.isDigit(s.charAt(i)))
+            {
+                numberflag=1;
+            }
+        }
+
+        if(letterflag==1&&numberflag==1)
+        {
+            return true;
+        }
+        else{return false;}
     }
 }

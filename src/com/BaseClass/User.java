@@ -2,6 +2,7 @@ package com.BaseClass;
 
 import com.DAO.BaseDAO;
 
+import java.security.PublicKey;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -18,6 +19,7 @@ public class User {
     private String passWord;
     private String uQuestion;
     private String uAnswer;
+    public User(){};
 
     public User(String uId, String uName, int uPms, String passWord, String uQuestion, String uAnswer) {
         this.uId = uId;
