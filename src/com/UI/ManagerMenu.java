@@ -14,6 +14,7 @@ public class ManagerMenu extends JMenub {
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
         JLabel label=new JLabel("欢迎进入食堂菜品评价系统");
         JButton button=new JButton("查询菜品");
         JButton button1=new JButton("评价菜品");

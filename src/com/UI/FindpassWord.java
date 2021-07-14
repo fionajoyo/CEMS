@@ -14,6 +14,7 @@ public class FindpassWord {
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
     JLabel label1=new JLabel("找回密码");
     JLabel userLabel = new JLabel("用户名:");           // 创建UserJLabel
     JTextField userText = new JTextField();           // 获取登录名
@@ -63,7 +64,7 @@ public class FindpassWord {
         answerText.setBounds(150,290,450,65);
         answerText.setFont(new Font("宋体",Font.BOLD,20));
 
-        button1.setBounds(150,600,150,65);
+        button1.setBounds(150,590,150,65);
         button1.setFont(new Font("宋体",Font.BOLD,30));
         button1.addActionListener(new ActionListener() {
             @Override
@@ -82,7 +83,7 @@ public class FindpassWord {
             }
         });
 
-        button2.setBounds(350,600,150,65);
+        button2.setBounds(350,590,150,65);
         button2.setFont(new Font("宋体",Font.BOLD,30));
         button2.addActionListener(new ActionListener() {
             @Override

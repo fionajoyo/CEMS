@@ -14,6 +14,7 @@ public class DeleteDish extends JMenub{
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
 
         JLabel label1=new JLabel("删除菜品");
         label1.setBounds(200,50,450,70);
@@ -37,7 +38,7 @@ public class DeleteDish extends JMenub{
 
 
         JButton button2=new JButton("删除");
-        button2.setBounds(150,570,150,65);
+        button2.setBounds(150,590,150,65);
         button2.setFont(new Font("宋体",Font.BOLD,30));
         button2.addActionListener(new ActionListener() {
             @Override
@@ -56,7 +57,7 @@ public class DeleteDish extends JMenub{
         });
 
         JButton button3=new JButton("取 消");
-        button3.setBounds(350,570,150,65);
+        button3.setBounds(350,590,150,65);
         button3.setFont(new Font("宋体",Font.BOLD,30));
         button3.addActionListener(new ActionListener() {
             @Override

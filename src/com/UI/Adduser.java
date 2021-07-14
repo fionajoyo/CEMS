@@ -14,6 +14,7 @@ public class Adduser extends JMenub{
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
         JLabel label1=new JLabel("添加用户");
         JLabel userLabel = new JLabel("用户名:");           // 创建UserJLabel
         JTextField userText = new JTextField();           // 获取登录名

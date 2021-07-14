@@ -13,9 +13,11 @@ public class ShowUser extends JMenub{
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
         String[] b={"1","2"};    //连接数据库
         JList a=new JList(b);
-        panel.add(a);
+        a.setBackground(Color.getHSBColor(201,175,138));
+        a.setBounds(0,0,634,712);
         JButton button=new JButton("返回主菜单");
         button.setBounds(200,500,250,100);
         button.setFont(new Font("宋体",Font.BOLD,40));
@@ -29,6 +31,7 @@ public class ShowUser extends JMenub{
             }
         });
         panel.add(button);
+        panel.add(a);
         panel.add(createuserMenu());
         panel.add(createabountMenu());
         frame.setJMenuBar(new JMenub());

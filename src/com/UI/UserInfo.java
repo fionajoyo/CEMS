@@ -14,6 +14,7 @@ public class UserInfo extends JMenub{
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
         JLabel label1=new JLabel("用户信息");
         JLabel userLabel = new JLabel("用户名:");           // 创建UserJLabel
         JTextField userText = new JTextField();           // 获取登录名
@@ -21,6 +22,8 @@ public class UserInfo extends JMenub{
         JPasswordField passText = new JPasswordField(20); //密码框隐藏
         JLabel evaLabel=new JLabel("历史评价:");
         JTextArea evaText=new JTextArea(3,20);
+        JLabel label=new JLabel("用户权限:");
+        JTextField textField=new JTextField(10);
         JButton button2=new JButton("关闭");
 
         label1.setBounds(200,50,450,70);
@@ -46,15 +49,27 @@ public class UserInfo extends JMenub{
         evaText.setBounds(150,290,450,65);
         evaText.setFont(new Font("宋体",Font.BOLD,20));
 
+        label.setBounds(50,360,100,65);
+        label.setFont(new Font("宋体",Font.BOLD,14));
 
-        button2.setBounds(250,600,150,65);
+        textField.setBounds(150,360,100,65);
+        textField.setFont(new Font("宋体",Font.BOLD,20));
+
+        button2.setBounds(250,590,150,65);
         button2.setFont(new Font("宋体",Font.BOLD,30));
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==button2){
-                    frame.dispose();
-                    new ManagerMenu();
+                    String[] a={"用户","管理员"};
+                    if(a[0].equals(textField.getText())) {
+                        frame.dispose();
+                        new UserMenu();
+                    }
+                    else if(a[1].equals(textField.getText())){
+                        frame.dispose();
+                        new ManagerMenu();
+                    }
                 }
             }
         });
@@ -66,6 +81,8 @@ public class UserInfo extends JMenub{
         panel.add(passText);
         panel.add(evaLabel);
         panel.add(evaText);
+        panel.add(label);
+        panel.add(textField);
         panel.add(button2);
         panel.add(createuserMenu());
         panel.add(createabountMenu());

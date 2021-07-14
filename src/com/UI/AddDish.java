@@ -14,6 +14,7 @@ public class AddDish extends JMenub{
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
 
         JLabel label1=new JLabel("添加菜品");
         label1.setBounds(200,50,450,70);

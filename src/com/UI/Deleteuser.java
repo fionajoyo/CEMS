@@ -14,6 +14,7 @@ public class Deleteuser extends JMenub{
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
         JLabel label1=new JLabel("删除用户");
         JLabel userid=new JLabel("id:");
         JTextField useridText = new JTextField(20);

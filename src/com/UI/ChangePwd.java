@@ -14,6 +14,7 @@ public class ChangePwd extends JMenub{
         frame.add(panel);                                      // 添加面板
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
+        panel.setBackground(Color.getHSBColor(201,175,138));
         JLabel label1=new JLabel("重置密码");
         JLabel userLabel = new JLabel("用户名:");           // 创建UserJLabel
         JTextField userText = new JTextField();           // 获取登录名
@@ -25,6 +26,8 @@ public class ChangePwd extends JMenub{
         JTextField questionText=new JTextField(100);
         JLabel answer=new JLabel("回答");
         JTextField answerText=new JTextField("请输入",100);
+        JLabel label=new JLabel("用户权限:");
+        JTextField textField=new JTextField(10);
         JButton button1=new JButton("确定");
         JButton button2=new JButton("取消");
 
@@ -63,7 +66,13 @@ public class ChangePwd extends JMenub{
         answerText.setBounds(150,290,450,65);
         answerText.setFont(new Font("宋体",Font.BOLD,20));
 
-        button1.setBounds(150,600,150,65);
+        label.setBounds(50,500,100,65);
+        label.setFont(new Font("宋体",Font.BOLD,14));
+
+        textField.setBounds(150,500,100,65);
+        textField.setFont(new Font("宋体",Font.BOLD,20));
+
+        button1.setBounds(150,590,150,65);
         button1.setFont(new Font("宋体",Font.BOLD,30));
         button1.addActionListener(new ActionListener() {
             @Override
@@ -75,20 +84,34 @@ public class ChangePwd extends JMenub{
                             "消息标题",
                             JOptionPane.INFORMATION_MESSAGE
                     );
-                    frame.dispose();
-                    new UserMenu();
+                    String[] a={"用户","管理员"};
+                    if(a[0].equals(textField.getText())) {
+                        frame.dispose();
+                        new UserMenu();
+                    }
+                    else if(a[1].equals(textField.getText())){
+                        frame.dispose();
+                        new ManagerMenu();
+                    }
                 }
             }
         });
 
-        button2.setBounds(350,600,150,65);
+        button2.setBounds(350,590,150,65);
         button2.setFont(new Font("宋体",Font.BOLD,30));
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==button2){
-                    frame.dispose();
-                    new UserMenu();
+                    String[] a={"用户","管理员"};
+                    if(a[0].equals(textField.getText())) {
+                        frame.dispose();
+                        new UserMenu();
+                    }
+                    else if(a[1].equals(textField.getText())){
+                        frame.dispose();
+                        new ManagerMenu();
+                    }
                 }
             }
         });
@@ -104,6 +127,8 @@ public class ChangePwd extends JMenub{
         panel.add(questionText);
         panel.add(answer);
         panel.add(answerText);
+        panel.add(label);
+        panel.add(textField);
         panel.add(button1);
         panel.add(button2);
         panel.add(createuserMenu());
