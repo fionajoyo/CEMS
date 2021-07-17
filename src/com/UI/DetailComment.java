@@ -13,105 +13,77 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class DishInfoUser extends JMenub{
-    private RoundRectButton lastButton=new RoundRectButton("14.png") ;
-    private RoundRectButton nextButton = new RoundRectButton("13.png") ;
+/**
+ * @version 1.0
+ * @author: GuanXinyu
+ * @time: 2021/7/16 8:19
+ */
+public class DetailComment extends JMenub{
     private final Dish dish;
+    private Comment fatherComment;
     private Comment[] comment;
     private final DishSystem dishSystem=new DishDAO();
-    private UserManage userManage= new UserDAO();
+    private final UserManage userManage= new UserDAO();
     private final CommentSystem commentSystem=new CommentDAO();
     private JPanel[] commentPanel;//评论框
     private JLabel NowLabel;//评论详情
     private JTextArea[] commentContain;//评论内容
     private JLabel[] DownLabel=new JLabel[5];//点踩
-    private JLabel[] UpLabel=new JLabel[5];//点赞框
+    private JLabel[] UpLabel=new JLabel[5];//点赞
     private JLabel[] userLabel=new JLabel[5];//评论详情
-
     public  int page=1;//评论页数
-    JFrame frame=new JFrame("菜品信息");
-    JPanel panel=new JPanel();
+    private final JFrame frame=new JFrame("菜品信息");
+    private final JPanel panel=new JPanel();
+    private JPanel fatherPanel=new JPanel();
+    private JTextArea fatherText=null;
+    private JLabel[] fatherLabel=new JLabel[3];//依次为点踩，点赞，详情
+    private DishInfoUser mainMenu=null;
 
-    public DishInfoUser(String dishId) {
-        //---
-        this.dish = dishSystem.DishReadin(dishId);//获取当前菜品
-        System.out.println(dish.getdName());
-        getComment(dishId);
-        //---
 
-        frame.setSize(1280, 720);//大小
+    public DetailComment(Dish dish, Comment fatherComment, DishInfoUser dishInfoUser){
+        this.dish=dish;
+        this.fatherComment=fatherComment;
+        this.mainMenu=dishInfoUser;
+        getFatherComment(fatherComment.getcId());
+
+        frame.setSize(1280,720);//大小
         frame.setLocationRelativeTo(null);//在屏幕中居中显示
         frame.setLayout(null);//边框布局
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);// 设置X号后关闭
 
         panel.setLayout(null);
-        panel.setBackground(Color.getHSBColor(201, 175, 138));
-        panel.setPreferredSize(new Dimension(1280, 1580));
+        panel.setBackground(Color.getHSBColor(201,175,138));
+        panel.setPreferredSize(new Dimension(1280,1580));
 
-        JLabel dishInformation = new JLabel("菜品信息");
-        dishInformation.setBounds(200, 80, 450, 70);
-        dishInformation.setFont(new Font("黑体", Font.BOLD, 60));
+        //菜名
+        JLabel title = new JLabel(dish.getdShop() + " " + dish.getdName());
+        title.setBounds(100, 20, 450, 70);
+        title.setFont(new Font("楷体", Font.BOLD, 40));
 
-        JLabel dishName = new JLabel("菜 品 名:");
-        dishName.setBounds(100, 180, 200, 65);
-        dishName.setFont(new Font("黑体", Font.BOLD, 40));
-        JLabel DishId = new JLabel(dish.getdName());
-        DishId.setBounds(300, 180, 450, 65);
-        DishId.setFont(new Font("黑体", Font.BOLD, 40));
 
-        JLabel shopNameLabel = new JLabel("店    名:");
-        shopNameLabel.setBounds(100, 300, 200, 65);
-        shopNameLabel.setFont(new Font("黑体", Font.BOLD, 40));
-        JLabel shopName = new JLabel(dish.getdShop());
-        shopName.setBounds(300, 300, 450, 65);
-        shopName.setFont(new Font("黑体", Font.BOLD, 40));
-
-        JLabel locationLabel = new JLabel("所处区域:");
-        locationLabel.setBounds(100, 420, 200, 65);
-        locationLabel.setFont(new Font("黑体", Font.BOLD, 40));
-        JLabel location = new JLabel(dish.getdLocation());
-        location.setBounds(300, 420, 450, 65);
-        location.setFont(new Font("黑体", Font.BOLD, 40));
-
-        //改变中
-        JLabel pictureLabel = new JLabel();//菜品图片
-        pictureLabel.setIcon(dishSystem.readImage(dish));
-        pictureLabel.setBounds(630, 60, 600, 450);
-
-        //
-        //评论
+        //生成评论框
         newComment();
-        //
+        newFatherComment();
 
         //我要评价！
-        RoundRectButton commentButton = new RoundRectButton("15.png");
-        commentButton.reset(520, 540, 300, 95);
+        RoundRectButton commentButton=new RoundRectButton("15.png");
+        commentButton.reset(520,540,300,95);
         commentButton.addActionListener(e -> {
-            if (e.getSource() == commentButton) {
-                new NewComment(dish, this, null, 0, null);
-            }
-        });
-
-
-        //这里修改为返回图标
-        RoundRectButton returnButton = new RoundRectButton("7.png");
-        returnButton.reset(20, 10, 50, 50);
-        returnButton.addActionListener(e -> {
-            if (e.getSource() == returnButton) {
-                frame.dispose();
-                new ManagerMenu();
+            if(e.getSource()==commentButton){
+                new NewComment(dish,mainMenu,this,0,fatherComment.getcId());
+                flashComment();
             }
         });
 
         //这里是下一页按钮
-
+        RoundRectButton nextButton=new RoundRectButton("13.png");
         nextButton.reset(800,1480,100,50);
         nextButton.addActionListener(e -> {
             if(e.getSource()==nextButton){
                 if(page*5<comment.length){
                     page++;
                 }
-                if(page==comment.length/5+1){
+                if(page==comment.length/5+1&&page!=1){
                     for(int j=5*page-comment.length;j>=comment.length%5;j--){
                         commentContain[j].setText("");
                         UpLabel[j].setText("");
@@ -124,8 +96,8 @@ public class DishInfoUser extends JMenub{
         });
 
         //这里是上一页按钮
+        RoundRectButton lastButton=new RoundRectButton("14.png");
         lastButton.reset(400,1480,100,50);
-
         lastButton.addActionListener(e -> {
             if(e.getSource()==lastButton){
                 if(page>1){
@@ -135,23 +107,12 @@ public class DishInfoUser extends JMenub{
             }
         });
 
-
-
-        //-------------
-        panel.add(dishInformation);
-        panel.add(dishName);
-        panel.add(DishId);
-        panel.add(shopNameLabel);
-        panel.add(shopName);
-        panel.add(locationLabel);
-        panel.add(location);
-        panel.add(pictureLabel);
-        panel.add(commentButton);
-        panel.add(returnButton);
+        panel.add(title);
         panel.add(createuserMenu());
         panel.add(createabountMenu());
         panel.add(nextButton);
         panel.add(lastButton);
+        panel.add(commentButton);
 
         JScrollPane scrollPane = new JScrollPane(
                 panel,
@@ -164,19 +125,21 @@ public class DishInfoUser extends JMenub{
         frame.setVisible(true);
     }
 
+    public void flashFatherComment(){
+        fatherLabel[0].setText(""+fatherComment.getcDown());
+        fatherLabel[1].setText(""+fatherComment.getcUp());
+    }
+
+    public void getFatherComment(String fatherId){
+        ArrayList<Comment> comments=commentSystem.fatherToSonComment(fatherId);//获取评论
+        comment=new Comment[comments.size()];
+        for (int i=0;i<comments.size();i++){
+            comment[i]=comments.get(i);
+        }
+    }
+
     public void flashComment(){
-        if(page==1)
-        {
-            lastButton.setVisible(false);
-
-        }
-        else {lastButton.setVisible(true);}
-
-        if(page*5>=comment.length)
-        {
-            nextButton.setVisible(false);
-        }
-        else {nextButton.setVisible(true);}
+        getFatherComment(fatherComment.getcId());
         for(int i=0;i<5;i++) {
             if(i+5*(page-1)<comment.length){
                 commentContain[i].setText(comment[5*(page-1)+i].getcContent());//得到评论内容
@@ -188,13 +151,62 @@ public class DishInfoUser extends JMenub{
         NowLabel.setText("第"+page+"页");
     }
 
+    public void newFatherComment(){
+        RoundRectButton r=null;
+        JLabel temp=null;
 
-    public void getComment(String dishId){
-        ArrayList<Comment> comments=commentSystem.DishToComment(dishId);//获取评论
-        comment=new Comment[comments.size()];
-        for (int i=0;i<comments.size();i++){
-            comment[i]=comments.get(i);
-        }
+        fatherPanel.setLayout(null);
+        fatherPanel.setBounds(190,300,900,125);
+        //panel.setBackground(Color.getHSBColor();
+        fatherText= new JTextArea(fatherComment.getcContent());//得到评论内容
+        fatherText.setBounds(0,0,900,100);
+        fatherText.setLineWrap(true);//自动换行
+        fatherText.setFont(new Font("楷体",Font.BOLD,20));
+        fatherText.setEditable(false);
+
+
+        //三个按钮生成
+        r=new RoundRectButton("4.png");//点踩
+        r.reset(850,75,25,25);
+        r.addActionListener(e -> {
+            commentSystem.getDown(fatherComment.getcId());
+            fatherComment.setcDown(fatherComment.getcDown()+1);
+            flashFatherComment();
+            mainMenu.flashComment();
+        });
+        fatherPanel.add(r);
+        r=new RoundRectButton("5.png");//点赞
+        r.reset(825,75,25,25);
+        r.addActionListener(e -> {
+            commentSystem.getUp(fatherComment.getcId());
+            fatherComment.setcUp(fatherComment.getcUp()+1);
+            flashFatherComment();
+            mainMenu.flashComment();
+        });
+        fatherPanel.add(r);
+
+
+        //三个按钮生成
+
+        //点踩
+        fatherLabel[0]=new JLabel(""+fatherComment.getcDown());
+        fatherLabel[0].setBounds(855,100,25,25);
+        fatherLabel[0].setFont(new Font("黑体",Font.BOLD,15));
+        fatherPanel.add(fatherLabel[0]);
+
+        //点赞
+        fatherLabel[1]=new JLabel(""+fatherComment.getcUp());
+        fatherLabel[1].setBounds(830,100,25,25);
+        fatherLabel[1].setFont(new Font("黑体",Font.BOLD,15));
+        fatherPanel.add(fatherLabel[1]);
+
+        //用户详情
+        fatherLabel[2]=new JLabel("来自用户--"+userManage.CommentToUser(fatherComment.getcId())+" 时间："+fatherComment.getcTiming());
+        fatherLabel[2].setBounds(10,100,500,25);
+        fatherLabel[2].setFont(new Font("楷体",Font.BOLD,15));
+        fatherPanel.add(fatherLabel[2]);
+        fatherPanel.add(fatherText);
+        panel.add(fatherPanel);
     }
 
     public void newComment(){
@@ -235,7 +247,7 @@ public class DishInfoUser extends JMenub{
             r.reset(875,75,25,25);
             r.addActionListener(e -> {
                 //跳转评论详情界面
-                new DetailComment(dish,comment[5*(page-1)+finalI],this);
+
             });
             commentPanel[i].add(r);
             commentPanel[i].add(commentContain[i]);
@@ -271,6 +283,8 @@ public class DishInfoUser extends JMenub{
     }
 
     public static void main(String[] args) {
-        new DishInfoUser("01002");
+        DishDAO dishDAO=new DishDAO();
+        CommentSystem commentSystem=new CommentDAO();
+        //detailComment detailComment=new detailComment(dishDAO.DishReadin("01001"),null);
     }
 }

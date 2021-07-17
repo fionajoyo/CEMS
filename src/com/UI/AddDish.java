@@ -12,7 +12,7 @@ public class AddDish extends JMenub{
         frame.setSize(650, 720);
         frame.setLocationRelativeTo(null);                     //在屏幕中居中显示
         frame.add(panel);                                      // 添加面板
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  // 设置X号后关闭
         panel.setLayout(null);
         panel.setBackground(Color.getHSBColor(201,175,138));
 

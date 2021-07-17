@@ -3,6 +3,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import com.DAO.UserDAO;
 import com.Interface.*;
@@ -34,7 +37,7 @@ public class Login extends JFrame {
         frame.setSize(650, 720);
         frame.setLocationRelativeTo(null);                     //在屏幕中居中显示
         frame.add(panel);                                      // 添加面板
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // 设置X号后关闭
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);  // 设置X号后关闭
         placeComponents(panel);                                //往窗体里放其他控件
         frame.setVisible(true);                                //设置窗体可见
     }
@@ -51,12 +54,16 @@ public class Login extends JFrame {
         // 创建 UserJLabel
         userLabel.setBounds(50, 200, 100, 65);
         userLabel.setFont(new Font("宋体",Font.BOLD,20));
+        //userLabel.setBorder(new RoundBorder());
         panel.add(userLabel);
         // 创建文本域用于用户输入
         userText.setBounds(150, 200, 400, 65);
+       // userText.setBackground(null);
         userText.setBorder(BorderFactory.createLineBorder(Color.white, 2, true));
+       // userText.setBorder(new RoundBorder());
         userText.setText("gxy");
         userText.setFont(new Font("黑体",Font.BOLD,20));
+
         panel.add(userText);
 
         // 创建PassJLabel
@@ -90,6 +97,7 @@ public class Login extends JFrame {
         panel.add(loginb);*/
         loginb.reset(110,520,200,40);
         panel.add(loginb);
+
         loginb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,26 +107,88 @@ public class Login extends JFrame {
                     int authority = loginAndRegister.login(userText.getText(), String.valueOf(passText.getPassword()));
                     //-------------接口引入
                     if(/*name[0].equals(cmb.getSelectedItem())*/authority>0&&userText.getText()!=null&&passText.getText()!=null){
-                        frame.dispose();
-                        new ManagerMenu();
+
+                        LoadingPanel glasspane =new LoadingPanel();
+
+                        glasspane.setBounds(325-100, 360-100, 650, 720);
+                        frame.add(glasspane);
+                        frame.setGlassPane(glasspane);
+                        glasspane.setText("Loading data, Please wait ...");
+                        glasspane.start();//开始动画加载效果
+                        //Thread t=glasspane.animation;
+                        Timer tt=new Timer();
+                        TimerTask ts=new TimerTask() {
+                            @Override
+                            public void run() {
+                                Timer tf=new Timer();
+                                TimerTask tts=new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        new DishClassify();
+                                        glasspane.stop();
+                                        frame.dispose();
+                                        JOptionPane.showMessageDialog(
+                                                frame,
+                                                "欢迎回来,"+userManage.showUserInformation().getuName()+"管理员",
+                                                "登录成功",
+                                                JOptionPane.INFORMATION_MESSAGE
+                                        );
+                                    }
+                                };
+                                tf.schedule(tts,1000);
+
+                            }
+                        };
+                        tt.schedule(ts,1000);
+
+
+                        /*new ManagerMenu();
                         JOptionPane.showMessageDialog(
                                 frame,
                                 "欢迎回来,"+userManage.showUserInformation().getuName()+"管理员",
                                 "登录成功",
                                 JOptionPane.INFORMATION_MESSAGE
-                        );
+                        );*/
                     }
                     else if(/*name[1].equals(cmb.getSelectedItem())*/authority==0&&userText.getText()!=null&&passText.getText()!=null){
-                        frame.dispose();
-                        new UserMenu();
-                        JOptionPane.showMessageDialog(
-                                frame,
-                                "欢迎回来,"+userManage.showUserInformation().getuName()+"用户",
-                                "消息标题",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
+                        LoadingPanel glasspane =new LoadingPanel();
+
+                        glasspane.setBounds(325-100, 360-100, 650, 720);
+                        frame.add(glasspane);
+                        frame.setGlassPane(glasspane);
+                        glasspane.setText("Loading data, Please wait ...");
+                        glasspane.start();//开始动画加载效果
+                        //Thread t=glasspane.animation;
+                        Timer tt=new Timer();
+                        TimerTask ts=new TimerTask() {
+                            @Override
+                            public void run() {
+
+                                Timer tf=new Timer();
+                                TimerTask tts=new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        new UserMenu();
+                                        glasspane.stop();
+                                        frame.dispose();
+                                        JOptionPane.showMessageDialog(
+                                                frame,
+                                                "欢迎回来,"+userManage.showUserInformation().getuName()+"用户",
+                                                "消息标题",
+                                                JOptionPane.INFORMATION_MESSAGE
+                                        );
+
+                                    }
+                                };
+                                tf.schedule(tts,1000);
+
+                            }
+                        };
+                        tt.schedule(ts,1000);
+                        //frame.dispose();
                     }
                     else{
+
                         JOptionPane.showMessageDialog(
                                 frame,
                                 "用户名或密码错误",

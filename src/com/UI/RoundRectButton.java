@@ -24,7 +24,7 @@ public class RoundRectButton extends JButton {
     {
         super(s);
         ss=s;
-        String filename=".\\image\\"+"s";
+        String filename=".\\image\\"+s;
         setText(null);
         setMargin(new Insets(0,0,0,0));//去除文字与按钮的边沿
         setBorder(null);//圆角矩形边界
@@ -32,15 +32,14 @@ public class RoundRectButton extends JButton {
         setContentAreaFilled(false);//取消原先画矩形的设置
         //setBorderPainted(false);//会导致按钮没有明显边界
         setFocusPainted(false);//去除文字周围的虚线框
-
-            try {
-                url = new URL("http://124.71.236.232:8888/down/ABM9pM78AZsG?fname=/"+s);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
             ImageIcon ic=new ImageIcon(filename);
             if(ic.getIconWidth()==-1)
             {
+                try {
+                    url = new URL("http://124.71.236.232:8888/down/ABM9pM78AZsG?fname=/"+s);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 DishSystem dd=new DishDAO();
                 dd.download(iconURLHead+s,s, ".\\image\\");
                 ic=new ImageIcon(url);
